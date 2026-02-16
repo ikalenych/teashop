@@ -4,8 +4,6 @@ import { Package, ShoppingBag, Users, TrendingUp } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../lib/api";
 
-const TEST = 67;
-
 export const AdminDashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState({
