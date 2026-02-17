@@ -16,7 +16,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       to={`/product/${product.slug}`}
       className="group block bg-background shadow-md hover:shadow-xl transition-shadow duration-300"
     >
-      <div className="aspect-square overflow-hidden bg-background-variant">
+      <div
+        data-testid="product-card"
+        className="aspect-square overflow-hidden bg-background-variant"
+      >
         <img
           src={product.image}
           alt={product.name}

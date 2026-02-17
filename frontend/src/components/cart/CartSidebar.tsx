@@ -74,6 +74,7 @@ export const CartSidebar = () => {
               {items.map((item) => (
                 <div
                   key={`${item.productId}-${item.variantIndex}`}
+                  data-testid="cart-item"
                   className="flex gap-4 pb-4 border-b border-outline last:border-b-0"
                 >
                   {/* Image */}
