@@ -1,13 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { Minus, Plus, X } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 
 const DELIVERY_COST = 3.95;
 
 export const Cart = () => {
-  const { items, updateQuantity, removeFromCart, subtotal, totalItems } =
-    useCart();
-  const navigate = useNavigate();
+  const { items, updateQuantity, removeFromCart, subtotal } = useCart();
 
   if (items.length === 0) {
     return (
@@ -80,6 +78,7 @@ export const Cart = () => {
             {items.map((item) => (
               <div
                 key={`${item.productId}-${item.variantIndex}`}
+                data-testid="cart-item"
                 className="bg-background-variant p-6 flex gap-4"
               >
                 {/* Image */}

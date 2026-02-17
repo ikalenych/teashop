@@ -1,7 +1,6 @@
 // src/context/CartContext.tsx
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-import { useAuth } from "./AuthContext";
 
 export interface CartItem {
   productId: string;
@@ -37,7 +36,6 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const CART_STORAGE_KEY = "tea-shop-cart";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const { user } = useAuth();
   const [items, setItems] = useState<CartItem[]>(() => {
     // Ініціалізуємо одразу з localStorage
     try {

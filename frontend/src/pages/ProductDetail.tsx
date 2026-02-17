@@ -222,6 +222,7 @@ export const ProductDetail = () => {
               </div>
 
               <button
+                data-testid="add-to-cart-btn"
                 onClick={handleAddToCart}
                 className="flex-1 bg-primary text-primary-on py-4 px-8 font-montserrat font-medium uppercase tracking-wider hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
               >
