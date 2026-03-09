@@ -1,15 +1,31 @@
-import { Search, User, ShoppingBag } from "lucide-react";
+import { Sun, Moon, User, ShoppingBag } from "lucide-react";
 import { BrandIcon } from "../icons/BrandIcon";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const dark = savedTheme === "dark";
+
+    setIsDark(dark);
+    document.documentElement.classList.toggle("dark", dark);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+
+    document.documentElement.classList.toggle("dark", newTheme);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
+
   const { totalItems, openSidebar } = useCart();
   const navigate = useNavigate();
-  {
-    /* Для того аби не дуплювати класи */
-  }
+
   const navLinkClass =
     "font-montserrat text-xs uppercase tracking-wider text-primary hover:text-secondary transition-colors";
 
@@ -17,15 +33,13 @@ export const Header = () => {
     <header className="bg-background shadow sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Лого */}
           <div className="flex items-center gap-2">
             <BrandIcon size={28} className="text-primary" />
             <Link to="/" className="font-prosto text-lg text-primary">
-              Chai Nasvai
+              Chai Town
             </Link>
           </div>
 
-          {/* Навігація - десктоп */}
           <nav className="hidden md:flex items-center gap-8">
             <Link to="/collections" className={navLinkClass}>
               Tea Collections
@@ -33,23 +47,26 @@ export const Header = () => {
             <Link to="/accessories" className={navLinkClass}>
               Accessories
             </Link>
-
             <Link to="/contact" className={navLinkClass}>
               Contact Us
             </Link>
           </nav>
 
-          {/* Іконки */}
           <div className="flex items-center gap-6">
-            <button className="text-primary hover:text-secondary transition-colors">
-              <Search size={18} />
+            <button
+              onClick={toggleTheme}
+              className="text-primary hover:text-secondary transition-colors"
+            >
+              {isDark ? <Moon size={18} /> : <Sun size={18} />}
             </button>
+
             <button
               onClick={() => navigate("/account")}
               className="text-primary hover:text-secondary transition-colors"
             >
               <User size={18} />
             </button>
+
             <button
               onClick={openSidebar}
               className="text-primary hover:text-secondary transition-colors relative"

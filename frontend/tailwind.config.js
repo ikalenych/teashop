@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
@@ -9,18 +10,18 @@ export default {
       },
       colors: {
         primary: {
-          DEFAULT: "#282828",
-          on: "#FFFFFF",
+          DEFAULT: "var(--color-primary)",
+          on: "var(--color-primary-on)",
         },
         secondary: {
-          DEFAULT: "#C3B212",
-          on: "#000000",
+          DEFAULT: "var(--color-secondary)",
+          on: "var(--color-secondary-on)",
         },
         background: {
-          DEFAULT: "#FEFEFE",
-          variant: "#F4F4F4",
+          DEFAULT: "var(--color-background)",
+          variant: "var(--color-background-variant)",
         },
-        outline: "#A0A0A0",
+        outline: "var(--color-outline)",
       },
     },
   },
