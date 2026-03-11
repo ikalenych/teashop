@@ -5,21 +5,18 @@ import { useCart } from "../../context/CartContext";
 import { useEffect, useState } from "react";
 
 export const Header = () => {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "dark";
+  });
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const dark = savedTheme === "dark";
-
-    setIsDark(dark);
-    document.documentElement.classList.toggle("dark", dark);
-  }, []);
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
-
-    document.documentElement.classList.toggle("dark", newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
   };
 
@@ -57,7 +54,7 @@ export const Header = () => {
               onClick={toggleTheme}
               className="text-primary hover:text-secondary transition-colors"
             >
-              {isDark ? <Moon size={18} /> : <Sun size={18} />}
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
 
             <button
