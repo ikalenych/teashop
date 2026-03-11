@@ -1,3 +1,4 @@
+[![E2E Tests](https://github.com/ikalenych/teashop/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/ikalenych/teashop/actions/workflows/playwright.yml)
 # TeaShop - E-commerce Platform
 
 ## Опис проекту
@@ -115,3 +116,5 @@ npx prisma migrate dev
 ```bash
 npx prisma studio
 ```
+## Live Demo
+[https://teashop-xxx.vercel.app](https://teashop-vert.vercel.app/)
