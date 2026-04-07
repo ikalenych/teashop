@@ -4,6 +4,7 @@ import { api } from "../lib/api";
 import type { Product } from "../data/products";
 import { useCart } from "../context/CartContext";
 import { Globe, Leaf, ShoppingBag, Minus, Plus } from "lucide-react";
+import posthog from "posthog-js";
 
 export const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -27,6 +28,13 @@ export const ProductDetail = () => {
       setLoading(true);
       const data = await api.getProductBySlug(slug);
       setProduct(data);
+
+      posthog.capture("product_viewed", {
+        product_id: data.id,
+        product_name: data.name,
+        category: data.category,
+        price: data.variants[0]?.price,
+      });
     } catch (error) {
       console.error("Failed to load product:", error);
       setProduct(null);
@@ -62,6 +70,14 @@ export const ProductDetail = () => {
       },
       quantity,
     );
+
+    posthog.capture("add_to_cart", {
+      product_id: product.id,
+      product_name: product.name,
+      variant_weight: variant.weight,
+      price: variant.price,
+      quantity: quantity,
+    });
 
     setQuantity(1);
   };

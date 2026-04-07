@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { api } from "../lib/api";
-
+import posthog from "posthog-js";
 const DELIVERY_COST = 3.95;
 
 export const Payment = () => {
@@ -127,6 +127,13 @@ export const Payment = () => {
       // Створюємо замовлення
       const order = await api.createOrder(orderData);
 
+      posthog.capture("order_created", {
+        order_id: order.id,
+        total: total,
+        payment_type: paymentType,
+        items_count: items.length,
+      });
+
       // Переходимо на Thank You page СПОЧАТКУ
       navigate(`/thank-you/${order.id}`, { replace: true });
 
@@ -136,6 +143,10 @@ export const Payment = () => {
       }, 100);
     } catch (error) {
       console.error("Order creation failed:", error);
+      posthog.capture("order_failed", {
+        payment_type: paymentType,
+        total: total,
+      });
       alert("Failed to create order. Please try again.");
     } finally {
       setLoading(false);

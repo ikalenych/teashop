@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Minus, Plus } from "lucide-react";
+import posthog from "posthog-js";
 
 const DELIVERY_COST = 3.95;
 
@@ -105,9 +106,16 @@ export const Cart = () => {
                   </p>
 
                   <button
-                    onClick={() =>
-                      removeFromCart(item.productId, item.variantIndex)
-                    }
+                    onClick={() => {
+                      posthog.capture("item_removed", {
+                        product_id: item.productId,
+                        product_name: item.productName,
+                        variant_weight: item.variantWeight,
+                        price: item.price,
+                        quantity: item.quantity,
+                      });
+                      removeFromCart(item.productId, item.variantIndex);
+                    }}
                     className="font-montserrat text-sm text-secondary hover:underline mt-2 uppercase"
                   >
                     Remove
