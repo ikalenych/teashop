@@ -168,7 +168,9 @@ export const api = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create product");
+      const errorBody = await response.json().catch(() => ({}));
+      console.error("Server error:", response.status, errorBody);
+      throw new Error(errorBody.message || "Failed to create order");
     }
 
     return response.json();
