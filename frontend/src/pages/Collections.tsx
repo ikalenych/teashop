@@ -9,6 +9,7 @@ import {
 } from "../utils/filterHelpers";
 import { ProductCard } from "../components/products/ProductCard";
 import { FilterSection } from "../components/products/FilterSection";
+import posthog from "posthog-js";
 
 export const Collections = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,6 +45,8 @@ export const Collections = () => {
   const caffeines = getArrayParam("caffeine");
   const organic = searchParams.get("organic") === "true";
   const sort = searchParams.get("sort") || "";
+
+  const showUrgentFilter = posthog.isFeatureEnabled("show-urgent-filter");
 
   // Динамічно витягуємо всі можливі значення
   const allCategories = getUniqueValues(products, "category");
@@ -190,6 +193,21 @@ export const Collections = () => {
                 </span>
               </label>
             </div>
+
+            {showUrgentFilter && (
+              <div className="border-b border-outline pb-4">
+                <button
+                  onClick={() => {
+                    const newParams = new URLSearchParams(searchParams);
+                    newParams.set("sort", "price-asc");
+                    setSearchParams(newParams);
+                  }}
+                  className="w-full bg-primary text-primary-on px-4 py-3 font-montserrat font-medium uppercase tracking-wider hover:opacity-90 transition-opacity"
+                >
+                  Only Urgent
+                </button>
+              </div>
+            )}
           </aside>
 
           {/* Товари */}
