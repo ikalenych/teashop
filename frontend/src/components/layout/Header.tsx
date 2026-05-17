@@ -44,14 +44,7 @@ export const Header = () => {
             <Link to="/accessories" className={navLinkClass}>
               Accessories
             </Link>
-            <button
-              onClick={() => {
-                throw new Error("Sentry Test Error: Something went wrong!");
-              }}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-            >
-              Нажми сюда і зламай всьо!
-            </button>
+        
           </nav>
 
           <div className="flex items-center gap-6">
